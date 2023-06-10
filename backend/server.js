@@ -3,8 +3,8 @@ const PORT = process.env.PORT || 8000
 const express = require('express')
 const dotenv = require('dotenv')
 const router = require('./router.js')
+const cors = require('cors')
 dotenv.config()
-const Car = require("./models/carModel.js")
 
 const connectDB = require('./config/dbConnect.js')
 connectDB()
@@ -12,6 +12,7 @@ connectDB()
 const app = express()
 
 app.use('/api/cars', router)
+app.use(cors())
 
 // Listening for PORT and Database
 mongoose.connection.on('error', function () {
