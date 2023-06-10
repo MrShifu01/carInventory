@@ -1,7 +1,6 @@
 import '../index.css'
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import { LinkContainer} from 'react-router-bootstrap'
-import axios from 'axios'
 
 const Header = () => {
 
