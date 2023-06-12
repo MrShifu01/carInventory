@@ -12,22 +12,43 @@ const AddPage = () => {
   })
 
   const handleAdd = async (e, carData) => {
-    e.preventDefault()
-    
-    if (carData.model === 0 || carData.make === "" || carData.regNumber === "" || carData.owner === "") {
-      setAlert(true)
+    e.preventDefault();
+  
+    const isValid = /^[a-zA-Z0-9 ]+$/.test(carData.make) &&
+      /^[a-zA-Z0-9 ]+$/.test(carData.owner) && 
+      /^[a-zA-Z0-9 ]+$/.test(carData.regNumber) && 
+      /^[0-9 ]+$/.test(carData.model);
+  
+    if (
+      carData.model === 0 ||
+      carData.make === "" ||
+      carData.regNumber === "" ||
+      carData.owner === "" ||
+      !isValid
+    ) {
+      setAlert(true);
     } else {
-      await axios.post('/api/cars', carData)
-      window.location.href = '/'
+      const capitalizedMake = carData.make.charAt(0).toUpperCase() + carData.make.slice(1);
+      const capitalizedOwner = carData.owner.charAt(0).toUpperCase() + carData.owner.slice(1);
+      
+      const updatedCarData = {
+        ...carData,
+        make: capitalizedMake,
+        owner: capitalizedOwner
+      };
+  
+      await axios.post('/api/cars', updatedCarData);
+      window.location.href = '/';
     }
-  }
+  };
+  
 
   return (
     <>
     <h1>Add a New Car</h1>
     {alert && (
       <Alert variant="danger" onClose={() => setAlert(false)} dismissible>
-        Please fill in all fields.
+        Please fill in all fields with only alphanumeric characters. 
       </Alert>
     )}
 

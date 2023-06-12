@@ -42,11 +42,24 @@ const EditMultiplePage = () => {
   const handleUpdateMany = async (e) => {
     e.preventDefault();
   
-    if ((byModel && !data.model) || (byMake && !data.make) || (byOwner && !data.owner)) {
+    if (
+      (byModel && !data.model) ||
+      (byMake && !data.make) ||
+      (byOwner && !data.owner)
+    ) {
       setAlert(true);
       return;
     }
-
+  
+    const isValid = /^[a-zA-Z0-9 ]+$/.test(data.model) &&
+      /^[a-zA-Z0-9 ]+$/.test(data.make) &&
+      /^[a-zA-Z0-9 ]+$/.test(data.owner);
+  
+    if (!isValid) {
+      setAlert(true);
+      return;
+    }
+  
     let filter = {};
   
     if (byModel) {
@@ -73,6 +86,7 @@ const EditMultiplePage = () => {
   };
   
   
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -83,7 +97,7 @@ const EditMultiplePage = () => {
     <>
       {alert && (
         <Alert variant="danger" onClose={() => setAlert(false)} dismissible>
-          Please Specify you Filter Criteria!
+          Please fill in all fields with only alphanumeric characters. 
         </Alert>
       )}
 

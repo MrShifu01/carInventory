@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { Alert } from 'react-bootstrap';
 
 const EditOnePage = () => {
   const [updateData, setUpdateData] = useState({});
+  const [alert, setAlert] = useState(false)
   const id = useSelector((state) => state.editId.id);
 
   useEffect(() => {
@@ -24,6 +26,18 @@ const EditOnePage = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+  
+    const isValid =
+      /^[a-zA-Z0-9 ]+$/.test(updateData.model) &&
+      /^[a-zA-Z0-9 ]+$/.test(updateData.make) &&
+      /^[a-zA-Z0-9 ]+$/.test(updateData.owner) &&
+      /^[a-zA-Z0-9 ]+$/.test(updateData.regNumber);
+  
+    if (!isValid) {
+      setAlert(true);
+      return;
+    }
+  
     await axios.patch(`/api/cars/${id}`, updateData);
     window.location.href = '/';
   };
@@ -35,6 +49,11 @@ const EditOnePage = () => {
 
   return (
     <>
+          {alert && (
+            <Alert variant="danger" onClose={() => setAlert(false)} dismissible>
+              Please fill in all fields with only alphanumeric characters. 
+            </Alert>
+          )}
     <h1>Update a Car's information</h1>
       <form type="submit" onSubmit={handleUpdate}>
         <div className="form-group">
