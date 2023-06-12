@@ -1,13 +1,16 @@
+/* Resizing the logo */
 .logo{
     width: 100px;
     height: 100px;
 }
 
+/* Spacing with the document Card buttons */
 .car-buttons {
     display: flex;
     justify-content: space-around;
 }
 
+/* Spacing and placing the form fields */
 .update-many-form {
     width: 30%;
     display: flex;
@@ -15,11 +18,13 @@
     gap: 1rem;
 }
 
+/* Styling the input fields */
 .update-many-input {
     display: flex;
     justify-content: space-between;
 }
 
+/* Resizing and placing the add folder icon */
 .plus {
     width: 50px;
     margin-right: 1rem;

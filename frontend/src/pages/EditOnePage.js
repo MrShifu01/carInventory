@@ -4,10 +4,12 @@ import { useSelector } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 
 const EditOnePage = () => {
+  // State variables
   const [updateData, setUpdateData] = useState({});
   const [alert, setAlert] = useState(false)
   const id = useSelector((state) => state.editId.id);
 
+  // Fetch the data to fill in fields of the edit form
   useEffect(() => {
     const fetchCar = async () => {
       const { data } = await axios.get(`/api/cars`);
@@ -22,13 +24,14 @@ const EditOnePage = () => {
     fetchCar();
   }, [id]);
 
-  console.log(updateData)
 
+  // Function to handle the update of one car
   const handleUpdate = async (e) => {
     e.preventDefault();
   
+    // Text validation
     const isValid =
-      /^[a-zA-Z0-9 ]+$/.test(updateData.model) &&
+      /^[0-9 ]+$/.test(updateData.model) &&
       /^[a-zA-Z0-9 ]+$/.test(updateData.make) &&
       /^[a-zA-Z0-9 ]+$/.test(updateData.owner) &&
       /^[a-zA-Z0-9 ]+$/.test(updateData.regNumber);
@@ -42,6 +45,7 @@ const EditOnePage = () => {
     window.location.href = '/';
   };
 
+  // Handling the change of the current car to be sent to the update function
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUpdateData((prevData) => ({ ...prevData, [name]: value }));
@@ -49,12 +53,14 @@ const EditOnePage = () => {
 
   return (
     <>
+    {/* Alert to notify user of wrong inputs */}
           {alert && (
             <Alert variant="danger" onClose={() => setAlert(false)} dismissible>
-              Please fill in all fields with only alphanumeric characters. 
+              Please fill in all fields with only alphanumeric characters. Note... Model must only be numeric
             </Alert>
           )}
     <h1>Update a Car's information</h1>
+    {/* Form to allow a user to update information */}
       <form type="submit" onSubmit={handleUpdate}>
         <div className="form-group">
           <label>Model</label>

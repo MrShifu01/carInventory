@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Alert } from 'react-bootstrap'
 
 const AddPage = () => {
+  // State variables
   const [alert, setAlert] = useState(false)
   const [carData, setCarData] = useState({
     model: 0,
@@ -14,10 +15,11 @@ const AddPage = () => {
   const handleAdd = async (e, carData) => {
     e.preventDefault();
   
+    // Input validation
     const isValid = /^[a-zA-Z0-9 ]+$/.test(carData.make) &&
       /^[a-zA-Z0-9 ]+$/.test(carData.owner) && 
       /^[a-zA-Z0-9 ]+$/.test(carData.regNumber) && 
-      /^[0-9 ]+$/.test(carData.model);
+      /^[0-9]+$/.test(carData.model);
   
     if (
       carData.model === 0 ||
@@ -28,6 +30,7 @@ const AddPage = () => {
     ) {
       setAlert(true);
     } else {
+      // Capitalize the make and the owner
       const capitalizedMake = carData.make.charAt(0).toUpperCase() + carData.make.slice(1);
       const capitalizedOwner = carData.owner.charAt(0).toUpperCase() + carData.owner.slice(1);
       
@@ -46,12 +49,13 @@ const AddPage = () => {
   return (
     <>
     <h1>Add a New Car</h1>
+    {/* Alert for wrong input */}
     {alert && (
       <Alert variant="danger" onClose={() => setAlert(false)} dismissible>
-        Please fill in all fields with only alphanumeric characters. 
+        Please fill in all fields with only alphanumeric characters. Note... Model must only be numeric
       </Alert>
     )}
-
+{/* Input form for a new car */}
     <form
     type="submit"
     onSubmit={(e) => handleAdd(e, carData)}

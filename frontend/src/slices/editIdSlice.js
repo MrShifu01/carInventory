@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+// The slice that handles updating and deletin a single record
+
 const editIdSlice = createSlice({
     name: "editId",
     initialState: {

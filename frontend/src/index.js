@@ -17,6 +17,7 @@ import AddPage from './pages/AddPage';
 import EditOnePage from './pages/EditOnePage';
 import EditMultiplePage from './pages/EditMultiplePage';
 
+// Specifying routes for the frontend
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App/>}>

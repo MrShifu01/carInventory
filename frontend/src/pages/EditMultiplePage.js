@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const EditMultiplePage = () => {
+  // State variables
   const [byModel, setByModel] = useState(false)
   const [byMake, setByMake] = useState(false)
   const [byOwner, setByOwner] = useState(false)
@@ -14,6 +15,7 @@ const EditMultiplePage = () => {
   const [allCars, setAllCars] = useState([])
   const [alert, setAlert] = useState(false)
 
+  // Fetch all car data on page load
   useEffect(() => {
     const fetchCars = async () => {
       const { data } = await axios.get('/api/cars')
@@ -23,7 +25,7 @@ const EditMultiplePage = () => {
   }, [])
 
 
-
+// Setting state depending on which attribute is chosen as a filter
   useEffect(() => {
     if (byModel) {
       const modelSet = new Set(allCars.map((model) => model.model))
@@ -42,6 +44,7 @@ const EditMultiplePage = () => {
   const handleUpdateMany = async (e) => {
     e.preventDefault();
   
+    // Input validation
     if (
       (byModel && !data.model) ||
       (byMake && !data.make) ||
@@ -51,7 +54,7 @@ const EditMultiplePage = () => {
       return;
     }
   
-    const isValid = /^[a-zA-Z0-9 ]+$/.test(data.model) &&
+    const isValid = /^[0-9]+$/.test(data.model) &&
       /^[a-zA-Z0-9 ]+$/.test(data.make) &&
       /^[a-zA-Z0-9 ]+$/.test(data.owner);
   
@@ -75,6 +78,7 @@ const EditMultiplePage = () => {
       data,
     };
   
+    // Sending the filter attribute and the new data through to the backend
     try {
       await axios.patch('/api/cars/', requestBody);
       // Handle success
@@ -85,9 +89,6 @@ const EditMultiplePage = () => {
     window.location.href = '/';
   };
   
-  
-  
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => ({ ...prevData, [name]: value }));
@@ -95,9 +96,10 @@ const EditMultiplePage = () => {
 
   return (
     <>
+    {/* Alert for wrong input */}
       {alert && (
         <Alert variant="danger" onClose={() => setAlert(false)} dismissible>
-          Please fill in all fields with only alphanumeric characters. 
+          Please fill in all fields with only alphanumeric characters. Note... Model must only be numeric 
         </Alert>
       )}
 

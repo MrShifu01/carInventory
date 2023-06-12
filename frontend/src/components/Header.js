@@ -2,6 +2,7 @@ import '../index.css'
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import { LinkContainer} from 'react-router-bootstrap'
 
+// Navigation section
 const Header = () => {
 
   return (
@@ -12,6 +13,7 @@ const Header = () => {
         expand='md'
         collapseOnSelect
         >
+            {/* Bootstrap navigation components */}
             <Container>
                 <LinkContainer to='/'>
                     <Navbar.Brand>

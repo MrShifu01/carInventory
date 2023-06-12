@@ -8,15 +8,18 @@ import axios from "axios";
 const Car = ({ car }) => {
   const dispatch = useDispatch();
 
+  // Using redux to save the current car button ID
   const handleUpdate = () => {
     dispatch(editId(car._id));
   };
 
+  // Handling the delete button of a car
   const handleDelete = async () => {
     await axios.delete(`/api/cars/${car._id}`)
     window.location.href = '/';
   };
 
+  // Building out the bootstrap card component
   return (
     <Card key={car._id} className="my-3 p-3 rounded">
       <Card.Img src={car.image} variant="top" />

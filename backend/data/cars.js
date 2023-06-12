@@ -1,3 +1,5 @@
+// The dummy data to populate the db with
+
 const cars = [
     {
       model: 2023,

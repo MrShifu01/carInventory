@@ -1,3 +1,5 @@
+// This file is only used to populate or clear the database of for the application
+
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const cars = require('./data/cars.js')
@@ -26,6 +28,7 @@ const importData = async () => {
     }
 }
 
+// Clear the DB
 const deleteData = async () => {
     try {
         await Car.deleteMany()
